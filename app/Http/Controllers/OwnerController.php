@@ -60,7 +60,7 @@ class OwnerController extends Controller
         ]);
 
         if ($request->propic) {
-            if ($user->propic) {
+            if ($user->propic && $user->propic != "default.png") {
                 Storage::delete('public/propic/' . $user->propic);
             }
             $data['propic'] = time() . $request->propic->hashName();
@@ -79,6 +79,22 @@ class OwnerController extends Controller
         $notif = [
             'toast' => 'success',
             'message' => 'User updated'
+        ];
+
+        return to_route('owner.users')->with($notif);
+    }
+
+    public function performDelUser(User $user)
+    {
+        if ($user->propic && $user->propic != "default.png") {
+            Storage::delete('public/propic/' . $user->propic);
+        }
+
+        $user->delete();
+
+        $notif = [
+            'toast' => 'success',
+            'message' => 'User deleted'
         ];
 
         return to_route('owner.users')->with($notif);

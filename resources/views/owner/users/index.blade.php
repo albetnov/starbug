@@ -35,8 +35,14 @@
                                     <td class="text-center">
                                         <button class="btn btn-info"
                                             onclick="location.href='{{ route('owner.users.edit', $user->id) }}'"><i
-                                                class="bx bx-edit"></i></button>
-                                        <button class="btn btn-danger"><i class="bx bx-trash"></i></button>
+                                                class="bx bx-edit"></i>
+                                        </button>
+                                        <form action="{{ route('owner.users.delete', $user->id) }}" method="post"
+                                            style="display: inline">
+                                            @csrf
+                                            <button type="submit" class="btn btn-danger"><i
+                                                    class="bx bx-trash"></i></button>
+                                        </form>
                                     </td>
                                 </tr>
                             @endforeach

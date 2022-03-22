@@ -37,6 +37,7 @@ Route::middleware('auth')->group(function () {
             Route::post('users/create', 'createUser');
             Route::get('users/edit/{user}', 'editUser')->name('users.edit');
             Route::post('users/edit/{user}', 'performEditUser');
+            Route::post('users/delete/{user}', 'performDelUser')->name('users.delete');
         });
     });
 
