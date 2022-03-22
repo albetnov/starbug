@@ -19,8 +19,11 @@ class AuthController extends Controller
         $rememberMe = $request->remember_me ? true : false;
         if (Auth::attempt(['username' => $data['username'], 'password' => $data['password']], $rememberMe)) {
             $request->session()->regenerate();
-            if (User::where('username', $data['username'])->first()->role == 'owner') {
+            $getRole = User::where('username', $data['username'])->first()->role;
+            if ($getRole == 'owner') {
                 return redirect()->intended(route('owner.dashboard'))->with(['message' => 'Welcome to Panel!']);
+            } else if ($getRole == 'disabled') {
+                return redirect()->intended(route('disabled'));
             }
         }
 
@@ -57,7 +60,7 @@ class AuthController extends Controller
         }
 
         unset($data['conpass']);
-        $data['role'] = "owner";
+        $data['role'] = "disabled";
         $data['password'] = bcrypt($data['password']);
         try {
             $user = User::create($data);
@@ -68,7 +71,7 @@ class AuthController extends Controller
         }
 
         Auth::login($user);
-        return to_route('owner.dashboard')->with('message', 'Welcome to panel!');
+        return to_route('disabled');
     }
 
     public function logout(Request $request)

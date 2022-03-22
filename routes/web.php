@@ -20,16 +20,19 @@ Route::get('/', function () {
     return view('welcome');
 });
 
-Route::view('/login', 'auth.login')->name('login');
-Route::view('/register', 'auth.register')->name('register');
+Route::view('/login', 'auth.login')->name('login')->middleware('guest');
+Route::view('/register', 'auth.register')->name('register')->middleware('guest');
 
-Route::controller(AuthController::class)->group(function () {
+Route::controller(AuthController::class)->middleware('guest')->group(function () {
     Route::post('/register', 'register');
     Route::post('/login', 'login');
 });
 
+
 Route::middleware('auth')->group(function () {
-    Route::group(['as' => 'owner.', 'prefix' => 'owner'], function () {
+    Route::view('/disabled', 'disabled')->name('disabled')->middleware('role:disabled');
+
+    Route::group(['as' => 'owner.', 'prefix' => 'owner', 'middleware' => 'role:owner'], function () {
         Route::view('dashboard', 'owner.dashboard')->name('dashboard');
         Route::controller(OwnerController::class)->group(function () {
             Route::get('users', 'users')->name('users');
