@@ -6,9 +6,8 @@
              <script>
                  document.write(new Date().getFullYear());
              </script>
-             , Template by
-             <a href="https://themeselection.com" target="_blank" class="footer-link fw-bolder">ThemeSelection.</a>
-             {{ config('app.name') }} by
+             {{ $appName }} using
+             StarBug by
              <a href="https://github.com/albetnov" target="_blank" class="footer-link fw-bolder">Albet Novendo</a>
          </div>
          <div>

@@ -8,7 +8,10 @@
         <div class="row">
             <div class="col-md-12">
                 <div class="card mb-4">
-                    <h5 class="card-header">Profile Details</h5>
+                    <div class="card-header">
+                        <h5>Profile Details</h5>
+                        <p class="text-muted">Last Updated: {{ Auth::user()->updated_at }}</p>
+                    </div>
                     <!-- Account -->
                     <form id="formAccountSettings" method="POST" action="{{ route('profile') }}"
                         enctype="multipart/form-data">
@@ -51,7 +54,8 @@
                                         placeholder="asep.surasep@example.com"
                                         value="{{ old('username', Auth::user()->username) }}" />
                                 </div>
-                                <div class="alert alert-warning">Leave empty if you don't want to change ther password</div>
+                                <div class="alert alert-warning">Leave empty if you don't want to change ther password
+                                </div>
                                 <div class="mb-3 col-md-6">
                                     <label for="password" class="form-label">Password</label>
                                     <input type="password" class="form-control" id="password" name="password" />
@@ -79,8 +83,10 @@
                     <div class="card-body">
                         <div class="mb-3 col-12 mb-0">
                             <div class="alert alert-warning">
-                                <h6 class="alert-heading fw-bold mb-1">Are you sure you want to delete your account?</h6>
-                                <p class="mb-0">Once you delete your account, there is no going back. Please be
+                                <h6 class="alert-heading fw-bold mb-1">Are you sure you want to delete your account?
+                                </h6>
+                                <p class="mb-0">Once you delete your account, there is no going back. Please
+                                    be
                                     certain.</p>
                             </div>
                         </div>

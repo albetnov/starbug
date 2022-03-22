@@ -105,7 +105,7 @@
                                         </g>
                                     </svg>
                                 </span>
-                                <span class="app-brand-text demo text-body fw-bolder">{{ config('app.name') }}</span>
+                                <span class="app-brand-text demo text-body fw-bolder">{{ $appName }}</span>
                             </a>
                         </div>
                         <!-- /Logo -->

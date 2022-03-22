@@ -1,6 +1,7 @@
 <?php
 
 use App\Http\Controllers\AuthController;
+use App\Http\Controllers\GuestController;
 use App\Http\Controllers\OwnerController;
 use App\Http\Controllers\ProfileManager;
 use Illuminate\Support\Facades\Route;
@@ -16,12 +17,11 @@ use Illuminate\Support\Facades\Route;
 |
 */
 
-Route::get('/', function () {
-    return view('welcome');
+Route::controller(GuestController::class)->middleware('guest')->group(function () {
+    Route::get('/', 'index')->name('home');
+    Route::get('/login', 'login')->name('login');
+    Route::get('/register', 'register')->name('register');
 });
-
-Route::view('/login', 'auth.login')->name('login')->middleware('guest');
-Route::view('/register', 'auth.register')->name('register')->middleware('guest');
 
 Route::controller(AuthController::class)->middleware('guest')->group(function () {
     Route::post('/register', 'register');
@@ -32,16 +32,26 @@ Route::controller(AuthController::class)->middleware('guest')->group(function ()
 Route::middleware('auth')->group(function () {
     Route::view('/disabled', 'disabled')->name('disabled')->middleware('role:disabled');
 
-    Route::group(['as' => 'owner.', 'prefix' => 'owner', 'middleware' => 'role:owner'], function () {
-        Route::view('dashboard', 'owner.dashboard')->name('dashboard');
-        Route::controller(OwnerController::class)->group(function () {
-            Route::get('users', 'users')->name('users');
-            Route::view('users/create', 'owner.users.create')->name('users.create');
-            Route::post('users/create', 'createUser');
-            Route::get('users/edit/{user}', 'editUser')->name('users.edit');
-            Route::post('users/edit/{user}', 'performEditUser');
-            Route::post('users/delete/{user}', 'performDelUser')->name('users.delete');
-        });
+    Route::group(['as' => 'owner.', 'prefix' => 'owner', 'middleware' => 'role:owner', 'controller' => OwnerController::class], function () {
+        Route::get('dashboard', 'dashboard')->name('dashboard');
+
+        Route::get('users', 'users')->name('users');
+        Route::get('users/create', 'createUser')->name('users.create');
+        Route::post('users/create', 'performcreateUser');
+        Route::get('users/edit/{user}', 'editUser')->name('users.edit');
+        Route::post('users/edit/{user}', 'performEditUser');
+        Route::post('users/delete/{user}', 'performDelUser')->name('users.delete');
+        Route::post('users/upgrade/{user}', 'upgradeUser')->name('users.upgrade');
+
+        Route::get('cafe', 'cafe')->name('cafe');
+        Route::post('cafe', 'editCafe');
+
+        Route::get('categories', 'showCategory')->name('category');
+        Route::get('categories/create', 'createCategory')->name('category.create');
+        Route::post('categories/create', 'performCreateCategory');
+        Route::get('categories/edit/{category}', 'editCategory')->name('category.edit');
+        Route::post('categories/edit/{category}', 'performEditCategory');
+        Route::post('categories/delete/{category}', 'performDelCategory')->name('category.delete');
     });
 
     Route::controller(ProfileManager::class)->group(function () {

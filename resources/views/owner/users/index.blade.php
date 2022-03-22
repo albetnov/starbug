@@ -21,6 +21,8 @@
                                 <th>Username</th>
                                 <th>Role</th>
                                 <th>Profile Picture</th>
+                                <th>Created At</th>
+                                <th>Updated At</th>
                                 <th class="text-center">Action</th>
                             </tr>
                         </thead>
@@ -29,9 +31,22 @@
                                 <tr>
                                     <td>{{ $user->name }}</td>
                                     <td>{{ $user->username }}</td>
-                                    <td>{{ $user->role }}</td>
+                                    @if ($user->role != 'disabled')
+                                        <td>{{ $user->role }}</td>
+                                    @else
+                                        <td>
+                                            <form action="{{ route('owner.users.upgrade', $user->id) }}"
+                                                class="inline" method="POST">
+                                                @csrf
+                                                <button type="submit" class="btn btn-primary"><i class="bx bx-check"></i>
+                                                    Upgrade to Cashier</button>
+                                            </form>
+                                        </td>
+                                    @endif
                                     <td><img src="{{ asset('storage/propic/' . $user->propic) }}"
                                             style="max-width: 70px; max-height:70px;"></td>
+                                    <td>{{ $user->created_at }}</td>
+                                    <td>{{ $user->updated_at }}</td>
                                     <td class="text-center">
                                         <button class="btn btn-info"
                                             onclick="location.href='{{ route('owner.users.edit', $user->id) }}'"><i
@@ -57,7 +72,9 @@
 @push('scripts')
     <script src="{{ asset('assets/vendor/datatable/datatables.min.js') }}"></script>
     <script>
-        $("#table").DataTable();
+        $("#table").DataTable({
+            "aaSorting": []
+        });
     </script>
 @endpush
 @push('styles')

@@ -1,7 +1,7 @@
 @extends('auth.layouts.main')
-@section('title', 'Login | ' . config('app.name'))
+@section('title', 'Login | ' . $appName)
 @section('content')
-    <h4 class="mb-2">Welcome to {{ config('app.name') }}! 👋</h4>
+    <h4 class="mb-2">Welcome to {{ $appName }}! 👋</h4>
     <p class="mb-4">Please sign-in to your account and start the adventure</p>
 
     @if (session('message'))

@@ -2,6 +2,8 @@
 
 namespace App\Http\Controllers;
 
+use App\Http\Controllers\Modules\MainView;
+use App\Models\Cafe;
 use App\Models\User;
 use Illuminate\Database\Eloquent\ModelNotFoundException;
 use Illuminate\Http\Request;
@@ -10,9 +12,10 @@ use Illuminate\Support\Facades\Storage;
 
 class ProfileManager extends Controller
 {
+    use MainView;
     public function show()
     {
-        return view('profile');
+        return $this->main_view('profile');
     }
 
     public function edit(Request $request)
