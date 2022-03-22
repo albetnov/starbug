@@ -28,8 +28,11 @@ class ProfileManager extends Controller
         $data = [
             'name' => $request->fullname,
             'username' => $request->username,
-            'password' => bcrypt($request->password),
         ];
+
+        if ($request->password) {
+            $data['password'] = bcrypt($request->password);
+        }
 
         if ($request->propic) {
             $data['propic'] = time() . hash("sha256", $request->propic->getClientOriginalName()) . $request->propic->getClientOriginalName();
@@ -42,7 +45,11 @@ class ProfileManager extends Controller
         ];
 
         try {
-            User::find(Auth::user()->id)->update($data);
+            $user = User::find(Auth::user()->id);
+            if ($user->propic && $user->propic != "default.png") {
+                Storage::delete('public/propic/' . $user->propic);
+            }
+            $user->update($data);
         } catch (ModelNotFoundException $e) {
             $notif = [
                 'toast' => 'error',
@@ -50,6 +57,34 @@ class ProfileManager extends Controller
             ];
         }
 
-        return redirect()->route('profile')->with($notif);
+        return to_route('profile')->with($notif);
+    }
+
+    public function delete(Request $request)
+    {
+        if (!$request->accountDeletion) {
+            $notif = [
+                'toast' => 'error',
+                'message' => 'Please tick the box.'
+            ];
+            return to_route('profile')->with($notif);
+        }
+        try {
+            $user = User::find(Auth::user()->id);
+
+            if ($user->propic && $user->propic != "default.png") {
+                Storage::delete('public/propic/' . $user->propic);
+            }
+            $user->delete();
+        } catch (ModelNotFoundException $e) {
+            $notif = [
+                'toast' => 'error',
+                'message' => 'Account failed to delete'
+            ];
+            return to_route('profile')->with($notif);
+        }
+
+        (new AuthController)->logout($request);
+        return to_route('login')->with('message', 'Account deleted.');
     }
 }

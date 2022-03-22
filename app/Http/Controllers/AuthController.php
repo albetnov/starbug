@@ -16,15 +16,6 @@ class AuthController extends Controller
             'password' => 'required'
         ]);
 
-        if (RateLimiter::remaining('login', 3)) {
-            RateLimiter::hit('login');
-        }
-        if (RateLimiter::tooManyAttempts('login', 3)) {
-            $seconds = RateLimiter::availableIn('login');
-
-            return redirect()->back()->with(['message' => 'Too many attempts. Access denied for: ' . $seconds . ' seconds']);
-        }
-
         $rememberMe = $request->remember_me ? true : false;
         if (Auth::attempt(['username' => $data['username'], 'password' => $data['password']], $rememberMe)) {
             $request->session()->regenerate();
@@ -36,6 +27,15 @@ class AuthController extends Controller
         return redirect()->back()->with([
             'message' => 'The provided credentials do not match our records.',
         ]);
+
+        if (RateLimiter::remaining('login', 3)) {
+            RateLimiter::hit('login');
+        }
+        if (RateLimiter::tooManyAttempts('login', 3)) {
+            $seconds = RateLimiter::availableIn('login');
+
+            return redirect()->back()->with(['message' => 'Too many attempts. Access denied for: ' . $seconds . ' seconds']);
+        }
     }
 
     public function register(Request $request)

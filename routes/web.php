@@ -1,6 +1,7 @@
 <?php
 
 use App\Http\Controllers\AuthController;
+use App\Http\Controllers\OwnerController;
 use App\Http\Controllers\ProfileManager;
 use Illuminate\Support\Facades\Route;
 
@@ -30,11 +31,19 @@ Route::controller(AuthController::class)->group(function () {
 Route::middleware('auth')->group(function () {
     Route::group(['as' => 'owner.', 'prefix' => 'owner'], function () {
         Route::view('dashboard', 'owner.dashboard')->name('dashboard');
+        Route::controller(OwnerController::class)->group(function () {
+            Route::get('users', 'users')->name('users');
+            Route::view('users/create', 'owner.users.create')->name('users.create');
+            Route::post('users/create', 'createUser');
+            Route::get('users/edit/{user}', 'editUser')->name('users.edit');
+            Route::post('users/edit/{user}', 'performEditUser');
+        });
     });
 
     Route::controller(ProfileManager::class)->group(function () {
         Route::get('/profile', 'show')->name('profile');
         Route::post('/profile', 'edit');
+        Route::post('/profile/delete', 'delete')->name('profile.delete');
     });
 
     Route::post('/logout', [AuthController::class, 'logout'])->name('logout');

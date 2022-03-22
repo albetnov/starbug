@@ -84,11 +84,12 @@
                                     certain.</p>
                             </div>
                         </div>
-                        <form id="formAccountDeactivation">
+                        <form id="formAccountDeactivation" method="POST" action="{{ route('profile.delete') }}">
+                            @csrf
                             <div class="form-check mb-3">
-                                <input class="form-check-input" type="checkbox" name="accountActivation"
+                                <input class="form-check-input" type="checkbox" name="accountDeletion"
                                     id="accountActivation" />
-                                <label class="form-check-label" for="accountActivation">I confirm my account
+                                <label class="form-check-label" for="accountDeletion">I confirm my account
                                     deactivation</label>
                             </div>
                             <button type="submit" class="btn btn-danger deactivate-account">Deactivate Account</button>
