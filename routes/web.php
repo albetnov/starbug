@@ -1,6 +1,7 @@
 <?php
 
 use App\Http\Controllers\AuthController;
+use App\Http\Controllers\ProfileManager;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -30,6 +31,11 @@ Route::middleware('auth')->group(function () {
     Route::group(['as' => 'owner.', 'prefix' => 'owner'], function () {
         Route::view('dashboard', 'owner.dashboard')->name('dashboard');
     });
-    
+
+    Route::controller(ProfileManager::class)->group(function () {
+        Route::get('/profile', 'show')->name('profile');
+        Route::post('/profile', 'edit');
+    });
+
     Route::post('/logout', [AuthController::class, 'logout'])->name('logout');
 });
