@@ -5,6 +5,7 @@ use App\Http\Controllers\GuestController;
 use App\Http\Controllers\MenuController;
 use App\Http\Controllers\OwnerController;
 use App\Http\Controllers\ProfileManager;
+use App\Http\Controllers\TableController;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -55,6 +56,7 @@ Route::middleware('auth')->group(function () {
         Route::post('categories/delete/{category}', 'performDelCategory')->name('category.delete');
 
         Route::resource('menu', MenuController::class)->except('show')->names(['index' => 'menu', 'destroy' => 'menu.delete']);
+        Route::resource('tables', TableController::class)->except('show')->names(['index' => 'tables', 'destroy' => 'tables.delete']);
     });
 
     Route::controller(ProfileManager::class)->group(function () {

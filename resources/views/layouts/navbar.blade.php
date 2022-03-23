@@ -111,6 +111,14 @@
                      </a>
                  </li>
 
+                 <li class="menu-header small text-uppercase"><span class="menu-header-text">Cafes</span></li>
+                 <li class="menu-item {{ strpos(Route::currentRouteName(), 'owner.tables') === 0 ? 'active' : '' }}">
+                     <a href="{{ route('owner.tables') }}" class="menu-link">
+                         <i class="menu-icon tf-icons bx bx-table"></i>
+                         <div data-i18n="Manage Tables">Manage Tables</div>
+                     </a>
+                 </li>
+
                  <!-- Misc -->
                  <li class="menu-header small text-uppercase"><span class="menu-header-text">Misc</span></li>
                  <li class="menu-item">

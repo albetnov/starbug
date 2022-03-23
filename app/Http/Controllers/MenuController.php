@@ -48,8 +48,8 @@ class MenuController extends Controller
             'name' => 'required|max:64',
             'description' => 'required',
             'category' => 'required',
-            'price' => 'required',
-            'status' => 'required',
+            'price' => 'required|numeric',
+            'status' => 'required|in:production,discontinued',
             'photo' => 'required|mimes:jpg,jpeg,png|max:2048'
         ]);
         $data['photo'] = time() . $request->photo->hashName();
@@ -92,8 +92,8 @@ class MenuController extends Controller
             'name' => 'required|max:64',
             'description' => 'required',
             'category' => 'required',
-            'price' => 'required',
-            'status' => 'required',
+            'price' => 'required|numeric',
+            'status' => 'required|in:production,discontinued',
             'photo' => 'nullable|mimes:jpg,jpeg,png|max:2048'
         ]);
         unset($data['photo']);
