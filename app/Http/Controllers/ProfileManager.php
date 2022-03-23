@@ -38,7 +38,7 @@ class ProfileManager extends Controller
         }
 
         if ($request->propic) {
-            $data['propic'] = time() . hash("sha256", $request->propic->getClientOriginalName()) . $request->propic->getClientOriginalName();
+            $data['propic'] = time()  . $request->propic->hashName();
             Storage::putFileAs('public/propic', $request->propic, $data['propic']);
         }
 

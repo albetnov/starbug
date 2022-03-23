@@ -104,6 +104,13 @@
                      </a>
                  </li>
 
+                 <li class="menu-item {{ strpos(Route::currentRouteName(), 'owner.menu') === 0 ? 'active' : '' }}">
+                     <a href="{{ route('owner.menu') }}" class="menu-link">
+                         <i class="menu-icon tf-icons bx bx-food-menu"></i>
+                         <div data-i18n="Manage Menu">Manage Menu</div>
+                     </a>
+                 </li>
+
                  <!-- Misc -->
                  <li class="menu-header small text-uppercase"><span class="menu-header-text">Misc</span></li>
                  <li class="menu-item">

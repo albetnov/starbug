@@ -2,6 +2,7 @@
 
 use App\Http\Controllers\AuthController;
 use App\Http\Controllers\GuestController;
+use App\Http\Controllers\MenuController;
 use App\Http\Controllers\OwnerController;
 use App\Http\Controllers\ProfileManager;
 use Illuminate\Support\Facades\Route;
@@ -52,6 +53,8 @@ Route::middleware('auth')->group(function () {
         Route::get('categories/edit/{category}', 'editCategory')->name('category.edit');
         Route::post('categories/edit/{category}', 'performEditCategory');
         Route::post('categories/delete/{category}', 'performDelCategory')->name('category.delete');
+
+        Route::resource('menu', MenuController::class)->except('show')->names(['index' => 'menu', 'destroy' => 'menu.delete']);
     });
 
     Route::controller(ProfileManager::class)->group(function () {

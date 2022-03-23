@@ -43,7 +43,8 @@
                                 <div class="d-flex">
                                     <div class="flex-shrink-0 me-3">
                                         <div class="avatar avatar-online">
-                                            <img src="{{ asset('storage/propic/' . Auth::user()->propic) }}" alt
+                                            <img src="{{ asset('storage/propic/' . Auth::user()->propic) }}"
+                                                alt="{{ Auth::user()->propic }}"
                                                 class="w-px-40 h-auto rounded-circle" />
                                         </div>
                                     </div>
