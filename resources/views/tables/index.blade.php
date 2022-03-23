@@ -49,7 +49,13 @@
                                 <tr>
                                     <td>{{ $table->name }}</td>
                                     <td>{{ $table->seat }}</td>
-                                    <td>{{ $table->status }}</td>
+                                    <td>
+                                        @if ($table->status == 'useable')
+                                            <span class="badge bg-label-success me-1">{{ $table->status }}</span>
+                                        @else
+                                            <span class="badge bg-label-danger me-1">{{ $table->status }}</span>
+                                        @endif
+                                    </td>
                                     <td>{{ $table->created_at }}</td>
                                     <td>{{ $table->updated_at }}</td>
                                     <td class="text-center">

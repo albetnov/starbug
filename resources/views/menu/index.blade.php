@@ -51,8 +51,14 @@
                                 <tr>
                                     <td>{{ $menu->name }}</td>
                                     <td>{{ $menu->description }}</td>
-                                    <td>{{ $menu->status }}</td>
-                                    <td>Rp. {{ $menu->price }}</td>
+                                    <td>
+                                        @if ($menu->status == 'production')
+                                            <span class="badge bg-label-info me-1">{{ $menu->status }}</span>
+                                        @else
+                                            <span class="badge bg-label-danger me-1">{{ $menu->status }}</span>
+                                        @endif
+                                    </td>
+                                    <td>Rp. {{ number_format($menu->price) }}</td>
                                     <td>{{ $menu->category->name }}</td>
                                     <td>{{ $menu->created_at }}</td>
                                     <td>{{ $menu->updated_at }}</td>

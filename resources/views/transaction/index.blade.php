@@ -1,15 +1,15 @@
 @extends('layouts.main')
-@section('title', 'Manage Subcriptions')
+@section('title', 'Manage Transactions')
 @section('content')
     <!-- Content -->
 
     <div class="container-fluid flex-grow-1 container-p-y">
         <div class="card shadow">
             <div class="card-header">
-                Subcriptions List
+                Transactions List
                 <br>
                 <button class="mt-1 btn btn-primary" onclick="location.href='{{ route('owner.subcription.create') }}'">
-                    <i class="bx bx-plus"></i> Create Subcriptions
+                    <i class="bx bx-plus"></i> Create Transactions
                 </button>
                 <button class="mt-1 btn btn-primary" type="button" data-bs-toggle="collapse" data-bs-target="#filter"
                     aria-expanded="false" aria-controls="filter">
@@ -22,8 +22,9 @@
                                 <label for="status" class="form-label">Status</label>
                                 <select name="status" id="status" class="form-select">
                                     <option value="">-</option>
-                                    <option value="applecible">Applecible</option>
-                                    <option value="not_applecible">Not Applecible</option>
+                                    <option value="paid">Paid</option>
+                                    <option value="waiting">Waiting</option>
+                                    <option value="cancelled">Cancelled</option>
                                 </select>
                             </div>
                             <button class="btn btn-primary"><i class="bx bx-filter"></i></button>
@@ -37,39 +38,44 @@
                         <thead>
                             <tr>
                                 <th>Name</th>
-                                <th>Discount</th>
-                                <th>Minimum Order</th>
-                                <th>Price</th>
-                                <th>Status</th>
+                                <th>Invoice Code</th>
+                                <th>Payment Status</th>
+                                <th>Subcription</th>
                                 <th>Created At</th>
                                 <th>Updated At</th>
                                 <th class="text-center">Action</th>
                             </tr>
                         </thead>
                         <tbody>
-                            @foreach ($subcriptions as $subcription)
+                            @foreach ($transactions as $transaction)
                                 <tr>
-                                    <td>{{ $subcription->name }}</td>
-                                    <td>{{ $subcription->discount }}</td>
-                                    <td>{{ $subcription->minimum_order }}</td>
-                                    <td>{{ $subcription->price }}</td>
+                                    <td>{{ $transaction->name }}</td>
+                                    <td>{{ $transaction->invoice }}</td>
                                     <td>
-                                        @if ($subcription->status == 'applecible')
+                                        @if ($transaction->payment_status == 'paid')
                                             <span
-                                                class="badge bg-label-success me-1">{{ str_replace('_', ' ', $subcription->status) }}</span>
+                                                class="badge bg-label-success me-1">{{ $transaction->payment_status }}</span>
+                                        @elseif ($transaction->payment_status == 'waiting')
+                                            <span
+                                                class="badge bg-label-warning me-1">{{ $transaction->payment_status }}</span>
                                         @else
                                             <span
-                                                class="badge bg-label-danger me-1">{{ str_replace('_', ' ', $subcription->status) }}</span>
+                                                class="badge bg-label-danger me-1">{{ $transaction->payment_status }}</span>
                                         @endif
                                     </td>
-                                    <td>{{ $subcription->created_at }}</td>
-                                    <td>{{ $subcription->updated_at }}</td>
+                                    <td>{{ $transaction->subcription->name }}</td>
+                                    <td>{{ $transaction->created_at }}</td>
+                                    <td>{{ $transaction->updated_at }}</td>
                                     <td class="text-center">
+                                        <button class="btn btn-primary"
+                                            onclick="location.href='{{ route('owner.transaction.show', $transaction->id) }}'">
+                                            <i class="bx bx-detail"></i>
+                                        </button>
                                         <button class="btn btn-info"
-                                            onclick="location.href='{{ route('owner.subcription.edit', $subcription->id) }}'"><i
+                                            onclick="location.href='{{ route('owner.transaction.edit', $transaction->id) }}'"><i
                                                 class="bx bx-edit"></i>
                                         </button>
-                                        <form action="{{ route('owner.subcription.delete', $subcription->id) }}"
+                                        <form action="{{ route('owner.transaction.delete', $transaction->id) }}"
                                             method="post" style="display: inline">
                                             @csrf
                                             @method('DELETE')

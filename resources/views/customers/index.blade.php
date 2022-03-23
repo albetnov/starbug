@@ -49,7 +49,13 @@
                                 <tr>
                                     <td>{{ $customer->name }}</td>
                                     <td>{{ $customer->subcription->name }}</td>
-                                    <td>{{ $customer->status }}</td>
+                                    <td>
+                                        @if ($customer->status == 'active')
+                                            <span class="badge bg-label-success me-1">{{ $customer->status }}</span>
+                                        @else
+                                            <span class="badge bg-label-danger me-1">{{ $customer->status }}</span>
+                                        @endif
+                                    </td>
                                     <td>{{ $customer->created_at }}</td>
                                     <td>{{ $customer->updated_at }}</td>
                                     <td class="text-center">

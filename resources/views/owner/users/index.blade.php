@@ -32,7 +32,13 @@
                                     <td>{{ $user->name }}</td>
                                     <td>{{ $user->username }}</td>
                                     @if ($user->role != 'disabled')
-                                        <td>{{ $user->role }}</td>
+                                        <td>
+                                            @if ($user->role == 'owner')
+                                                <span class="badge bg-label-success me-1">{{ $user->role }}</span>
+                                            @else
+                                                <span class="badge bg-label-warning me-1">{{ $user->role }}</span>
+                                            @endif
+                                        </td>
                                     @else
                                         <td>
                                             <form action="{{ route('owner.users.upgrade', $user->id) }}"

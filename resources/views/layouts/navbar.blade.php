@@ -135,6 +135,15 @@
                      </a>
                  </li>
 
+
+                 <li
+                     class="menu-item {{ strpos(Route::currentRouteName(), 'owner.transaction') === 0 ? 'active' : '' }}">
+                     <a href="{{ route('owner.transaction') }}" class="menu-link">
+                         <i class="menu-icon tf-icons bx bxs-wallet"></i>
+                         <div data-i18n="Manage Transactions">Manage Transactions</div>
+                     </a>
+                 </li>
+
                  <!-- Misc -->
                  <li class="menu-header small text-uppercase"><span class="menu-header-text">Misc</span></li>
                  <li class="menu-item">

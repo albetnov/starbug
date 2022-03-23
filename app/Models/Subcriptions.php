@@ -8,5 +8,5 @@ use Illuminate\Database\Eloquent\Model;
 class Subcriptions extends Model
 {
     use HasFactory;
-    protected $fillable = ['name', 'discount', 'minimum_order', 'price'];
+    protected $fillable = ['name', 'discount', 'minimum_order', 'price', 'status'];
 }
