@@ -14,9 +14,14 @@ class TableController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function index()
+    public function index(Request $request)
     {
-        return $this->main_view('tables.index', ['tables' => Table::get()]);
+        $tables = Table::get();
+        $rules = ['useable', 'broken'];
+        if ($request->status && in_array($request->status, $rules)) {
+            $tables = Table::where('status', $request->status)->get();
+        }
+        return $this->main_view('tables.index', compact('tables'));
     }
 
     /**
@@ -52,7 +57,7 @@ class TableController extends Controller
 
         return to_route('owner.tables')->with($notif);
     }
-    
+
     /**
      * Show the form for editing the specified resource.
      *
@@ -73,7 +78,7 @@ class TableController extends Controller
      */
     public function update(Request $request, Table $table)
     {
-         $data = $request->validate([
+        $data = $request->validate([
             'name' => 'required|max:64',
             'seat' => 'required|numeric',
             'status' => 'required|in:useable,broken'

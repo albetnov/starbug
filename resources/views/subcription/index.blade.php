@@ -1,15 +1,15 @@
 @extends('layouts.main')
-@section('title', 'Manage Tables')
+@section('title', 'Manage Subcriptions')
 @section('content')
     <!-- Content -->
 
     <div class="container-fluid flex-grow-1 container-p-y">
         <div class="card shadow">
             <div class="card-header">
-                Table List
+                Subcriptions List
                 <br>
-                <button class="mt-1 btn btn-primary" onclick="location.href='{{ route('owner.tables.create') }}'">
-                    <i class="bx bx-plus"></i> Create Table
+                <button class="mt-1 btn btn-primary" onclick="location.href='{{ route('owner.subcription.create') }}'">
+                    <i class="bx bx-plus"></i> Create Subcriptions
                 </button>
                 <button class="mt-1 btn btn-primary" type="button" data-bs-toggle="collapse" data-bs-target="#filter"
                     aria-expanded="false" aria-controls="filter">
@@ -22,8 +22,8 @@
                                 <label for="status" class="form-label">Status</label>
                                 <select name="status" id="status" class="form-select">
                                     <option value="">-</option>
-                                    <option value="useable">Useable</option>
-                                    <option value="broken">Broken</option>
+                                    <option value="applecible">Applecible</option>
+                                    <option value="not_applecible">Not Applecible</option>
                                 </select>
                             </div>
                             <button class="btn btn-primary"><i class="bx bx-filter"></i></button>
@@ -37,7 +37,9 @@
                         <thead>
                             <tr>
                                 <th>Name</th>
-                                <th>Seat</th>
+                                <th>Discount</th>
+                                <th>Minimum Order</th>
+                                <th>Price</th>
                                 <th>Status</th>
                                 <th>Created At</th>
                                 <th>Updated At</th>
@@ -45,20 +47,22 @@
                             </tr>
                         </thead>
                         <tbody>
-                            @foreach ($tables as $table)
+                            @foreach ($subcriptions as $subcription)
                                 <tr>
-                                    <td>{{ $table->name }}</td>
-                                    <td>{{ $table->seat }}</td>
-                                    <td>{{ $table->status }}</td>
-                                    <td>{{ $table->created_at }}</td>
-                                    <td>{{ $table->updated_at }}</td>
+                                    <td>{{ $subcription->name }}</td>
+                                    <td>{{ $subcription->discount }}</td>
+                                    <td>{{ $subcription->minimum_order }}</td>
+                                    <td>{{ $subcription->price }}</td>
+                                    <td>{{ $subcription->status }}</td>
+                                    <td>{{ $subcription->created_at }}</td>
+                                    <td>{{ $subcription->updated_at }}</td>
                                     <td class="text-center">
                                         <button class="btn btn-info"
-                                            onclick="location.href='{{ route('owner.tables.edit', $table->id) }}'"><i
+                                            onclick="location.href='{{ route('owner.subcription.edit', $subcription->id) }}'"><i
                                                 class="bx bx-edit"></i>
                                         </button>
-                                        <form action="{{ route('owner.tables.delete', $table->id) }}" method="post"
-                                            style="display: inline">
+                                        <form action="{{ route('owner.subcription.delete', $subcription->id) }}"
+                                            method="post" style="display: inline">
                                             @csrf
                                             @method('DELETE')
                                             <button type="submit" class="btn btn-danger"><i

@@ -119,6 +119,22 @@
                      </a>
                  </li>
 
+                 <li
+                     class="menu-item {{ strpos(Route::currentRouteName(), 'owner.subcription') === 0 ? 'active' : '' }}">
+                     <a href="{{ route('owner.subcription') }}" class="menu-link">
+                         <i class="menu-icon tf-icons bx bx-purchase-tag"></i>
+                         <div data-i18n="Manage Subcriptions">Manage Subcriptions</div>
+                     </a>
+                 </li>
+
+                 <li
+                     class="menu-item {{ strpos(Route::currentRouteName(), 'owner.customers') === 0 ? 'active' : '' }}">
+                     <a href="{{ route('owner.customers') }}" class="menu-link">
+                         <i class="menu-icon tf-icons bx bxs-user-rectangle"></i>
+                         <div data-i18n="Manage Customers">Manage Customers</div>
+                     </a>
+                 </li>
+
                  <!-- Misc -->
                  <li class="menu-header small text-uppercase"><span class="menu-header-text">Misc</span></li>
                  <li class="menu-item">

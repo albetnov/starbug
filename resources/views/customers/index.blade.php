@@ -1,15 +1,15 @@
 @extends('layouts.main')
-@section('title', 'Manage Tables')
+@section('title', 'Manage Customers')
 @section('content')
     <!-- Content -->
 
     <div class="container-fluid flex-grow-1 container-p-y">
         <div class="card shadow">
             <div class="card-header">
-                Table List
+                Customers List
                 <br>
-                <button class="mt-1 btn btn-primary" onclick="location.href='{{ route('owner.tables.create') }}'">
-                    <i class="bx bx-plus"></i> Create Table
+                <button class="mt-1 btn btn-primary" onclick="location.href='{{ route('owner.customers.create') }}'">
+                    <i class="bx bx-plus"></i> Create Customers
                 </button>
                 <button class="mt-1 btn btn-primary" type="button" data-bs-toggle="collapse" data-bs-target="#filter"
                     aria-expanded="false" aria-controls="filter">
@@ -22,8 +22,8 @@
                                 <label for="status" class="form-label">Status</label>
                                 <select name="status" id="status" class="form-select">
                                     <option value="">-</option>
-                                    <option value="useable">Useable</option>
-                                    <option value="broken">Broken</option>
+                                    <option value="active">Active</option>
+                                    <option value="inactive">Inactive</option>
                                 </select>
                             </div>
                             <button class="btn btn-primary"><i class="bx bx-filter"></i></button>
@@ -37,7 +37,7 @@
                         <thead>
                             <tr>
                                 <th>Name</th>
-                                <th>Seat</th>
+                                <th>Subcriptions</th>
                                 <th>Status</th>
                                 <th>Created At</th>
                                 <th>Updated At</th>
@@ -45,19 +45,19 @@
                             </tr>
                         </thead>
                         <tbody>
-                            @foreach ($tables as $table)
+                            @foreach ($customers as $customer)
                                 <tr>
-                                    <td>{{ $table->name }}</td>
-                                    <td>{{ $table->seat }}</td>
-                                    <td>{{ $table->status }}</td>
-                                    <td>{{ $table->created_at }}</td>
-                                    <td>{{ $table->updated_at }}</td>
+                                    <td>{{ $customer->name }}</td>
+                                    <td>{{ $customer->subcription->name }}</td>
+                                    <td>{{ $customer->status }}</td>
+                                    <td>{{ $customer->created_at }}</td>
+                                    <td>{{ $customer->updated_at }}</td>
                                     <td class="text-center">
                                         <button class="btn btn-info"
-                                            onclick="location.href='{{ route('owner.tables.edit', $table->id) }}'"><i
+                                            onclick="location.href='{{ route('owner.customers.edit', $customer->id) }}'"><i
                                                 class="bx bx-edit"></i>
                                         </button>
-                                        <form action="{{ route('owner.tables.delete', $table->id) }}" method="post"
+                                        <form action="{{ route('owner.customers.delete', $customer->id) }}" method="post"
                                             style="display: inline">
                                             @csrf
                                             @method('DELETE')

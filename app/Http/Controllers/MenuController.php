@@ -18,9 +18,10 @@ class MenuController extends Controller
      */
     public function index(Request $request)
     {
-        $menus = Menu::get();
-        if($request->status) {
-            $menus = Menu::where('status', $request->status)->get();
+        $menus = Menu::with('category')->get();
+        $rules = ['production', 'discontinued'];
+        if ($request->status && in_array($request->status, $rules)) {
+            $menus = Menu::with('category')->where('status', $request->status)->get();
         }
 
         return $this->main_view('menu.index', compact('menus'));
@@ -98,12 +99,12 @@ class MenuController extends Controller
         ]);
         unset($data['photo']);
 
-        if($request->photo) {
+        if ($request->photo) {
             $data['photo'] = time() . $request->photo->hashName();
-            Storage::delete('public/menu/'. $menu->photo);
+            Storage::delete('public/menu/' . $menu->photo);
             Storage::putFileAs('public/menu', $request->photo, $data['photo']);
         }
-         
+
         $data['id_category'] = $data['category'];
         unset($data['category']);
 
@@ -126,8 +127,8 @@ class MenuController extends Controller
      */
     public function destroy(Menu $menu)
     {
-        if($menu->photo) {
-            Storage::delete('public/menu/'. $menu->photo);
+        if ($menu->photo) {
+            Storage::delete('public/menu/' . $menu->photo);
         }
 
         $menu->delete();
