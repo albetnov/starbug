@@ -8,7 +8,8 @@ use App\Http\Controllers\OwnerController;
 use App\Http\Controllers\ProfileManager;
 use App\Http\Controllers\SubcriptionsController;
 use App\Http\Controllers\TableController;
-use App\Http\Controllers\TransactionController;
+use App\Http\Livewire\AddTransaction;
+use App\Http\Livewire\Transaction;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -62,7 +63,8 @@ Route::middleware('auth')->group(function () {
         Route::resource('tables', TableController::class)->except('show')->names(['index' => 'tables', 'destroy' => 'tables.delete']);
         Route::resource('subcription', SubcriptionsController::class)->except('show')->names(['index' => 'subcription', 'destroy' => 'subcription.delete']);
         Route::resource('customers', CustomersController::class)->except('show')->names(['index' => 'customers', 'destroy' => 'customers.delete']);
-        Route::resource('transaction', TransactionController::class)->except('show')->names(['index' => 'transaction', 'destroy' => 'transaction.delete']);
+        Route::get('transaction', Transaction::class)->name('transaction');
+        Route::get('transaction/create', AddTransaction::class)->name('transaction.create');
     });
 
     Route::controller(ProfileManager::class)->group(function () {

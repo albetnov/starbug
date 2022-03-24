@@ -18,7 +18,7 @@ return new class extends Migration
             $table->foreignId('id_customer')->constrained('customers', 'id')->cascadeOnUpdate()->cascadeOnUpdate();
             $table->string('invoice');
             $table->enum('payment_status', ['paid', 'waiting', 'cancelled']);
-            $table->foreignId('id_transaction_menu')->constrained('transaction_menus', 'id')->cascadeOnUpdate()->cascadeOnDelete();
+            $table->bigInteger('price');
             $table->timestamps();
         });
     }

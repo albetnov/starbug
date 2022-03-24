@@ -17,6 +17,7 @@ return new class extends Migration
             $table->id();
             $table->bigInteger('id_transaction');
             $table->foreignId('id_menu')->constrained('menus', 'id')->cascadeOnUpdate()->cascadeOnDelete();
+            $table->bigInteger('qty');
             $table->timestamps();
         });
     }

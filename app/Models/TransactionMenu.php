@@ -8,7 +8,7 @@ use Illuminate\Database\Eloquent\Model;
 class TransactionMenu extends Model
 {
     use HasFactory;
-    protected $fillable = ['id_transaction', 'id_menu'];
+    protected $fillable = ['id_transaction', 'id_menu', 'qty'];
 
     public function menu()
     {

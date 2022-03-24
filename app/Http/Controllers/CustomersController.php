@@ -33,7 +33,7 @@ class CustomersController extends Controller
      */
     public function create()
     {
-        $subcriptions = Subcriptions::get();
+        $subcriptions = Subcriptions::where('status', 'applecible')->get();
         return $this->main_view('customers.create', compact('subcriptions'));
     }
 
@@ -69,7 +69,7 @@ class CustomersController extends Controller
      */
     public function edit(Customers $customer)
     {
-        $subcriptions = Subcriptions::get();
+        $subcriptions = Subcriptions::where('status', 'applecible')->get();
         return $this->main_view('customers.edit', compact('customer', 'subcriptions'));
     }
 

@@ -33,6 +33,12 @@
                     </div>
 
                     <div class="mb-3">
+                        @if ($customer->subcription->status == 'not_applecible')
+                            <div class="alert alert-warning">
+                                This customer current subcription are not longer supported. Edit advised.
+                                Current Subcription: {{ $customer->subcription->name }}
+                            </div>
+                        @endif
                         <label for="id_subcription" class="form-label">Subcription</label>
                         <select name="id_subcription" id="id_subcription" class="form-select">
                             @foreach ($subcriptions as $subcription)
