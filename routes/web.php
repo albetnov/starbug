@@ -38,7 +38,7 @@ Route::controller(AuthController::class)->middleware('guest')->group(function ()
 
 
 Route::middleware('auth')->group(function () {
-    Route::view('/disabled', 'disabled')->name('disabled')->middleware('role:disabled');
+    Route::get('/disabled', [GuestController::class, 'disabled'])->name('disabled')->middleware('role:disabled');
 
     Route::group(['as' => 'owner.', 'prefix' => 'owner', 'middleware' => 'role:owner', 'controller' => OwnerController::class], function () {
         Route::get('dashboard', 'dashboard')->name('dashboard');

@@ -35,13 +35,23 @@ class GuestController extends Controller
         return $this->main_view('auth.login');
     }
 
-   /**
-    * This function will return the register view
-    * 
-    * @return The register view.
-    */
+    /**
+     * This function will return the register view
+     * 
+     * @return The register view.
+     */
     public function register()
     {
         return $this->main_view('auth.register');
+    }
+
+    /**
+     * This function returns the disabled view
+     * 
+     * @return The disabled view.
+     */
+    public function disabled()
+    {
+        return $this->main_view('disabled');
     }
 }
