@@ -1,5 +1,5 @@
 @extends('auth.layouts.main')
-@section('title', 'Register | ' . ['appName' => Cafe::first()->name])
+@section('title', 'Register | ' . $appName)
 @section('content')
     <h4 class="mb-2">Adventure starts here 🚀</h4>
     <p class="mb-4">Make your app management easy and fun!</p>
