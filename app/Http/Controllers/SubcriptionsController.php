@@ -16,10 +16,10 @@ class SubcriptionsController extends Controller
      */
     public function index(Request $request)
     {
-        $subcriptions = Subcriptions::get();
+        $subcriptions = Subcriptions::latest()->get();
         $rules = ['applecible', 'not_applecible'];
         if ($request->status && in_array($request->status, $rules)) {
-            $subcriptions = Subcriptions::where('status', $request->status)->get();
+            $subcriptions = Subcriptions::where('status', $request->status)->latest()->get();
         }
         return $this->main_view('subcription.index', compact('subcriptions'));
     }

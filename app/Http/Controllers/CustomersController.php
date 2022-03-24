@@ -18,10 +18,10 @@ class CustomersController extends Controller
      */
     public function index(Request $request)
     {
-        $customers = Customers::with('subcription')->get();
+        $customers = Customers::with('subcription')->latest()->get();
         $rules = ['active', 'inactive'];
         if ($request->status && in_array($request->status, $rules)) {
-            $customers = Customers::where('status', $request->status)->get();
+            $customers = Customers::where('status', $request->status)->latest()->get();
         }
 
         return $this->main_view('customers.index', compact('customers'));

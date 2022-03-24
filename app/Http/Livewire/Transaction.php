@@ -77,9 +77,9 @@ class Transaction extends Component
      */
     public function render()
     {
-        $transactions = ModelsTransaction::with('transactionMenu')->get();
+        $transactions = ModelsTransaction::with('transactionMenu')->latest()->get();
         if ($this->filter) {
-            $transactions = ModelsTransaction::with('transactionMenu')->where('payment_status', $this->status)->get();
+            $transactions = ModelsTransaction::with('transactionMenu')->where('payment_status', $this->status)->latest()->get();
         }
         return view('livewire.transaction', compact('transactions'))->extends('layouts.main', ['appName' => Cafe::first()->name])->section('content');
     }

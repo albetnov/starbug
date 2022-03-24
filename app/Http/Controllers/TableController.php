@@ -16,7 +16,7 @@ class TableController extends Controller
      */
     public function index(Request $request)
     {
-        $tables = Table::get();
+        $tables = Table::latest()->get();
         $rules = ['useable', 'broken'];
         if ($request->status && in_array($request->status, $rules)) {
             $tables = Table::where('status', $request->status)->get();

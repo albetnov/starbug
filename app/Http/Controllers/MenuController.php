@@ -19,7 +19,7 @@ class MenuController extends Controller
      */
     public function index(Request $request)
     {
-        $menus = Menu::with('category')->get();
+        $menus = Menu::with('category')->latest()->get();
         $rules = ['production', 'discontinued'];
         if ($request->status && in_array($request->status, $rules)) {
             $menus = Menu::with('category')->where('status', $request->status)->get();
