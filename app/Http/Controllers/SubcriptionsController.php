@@ -45,7 +45,6 @@ class SubcriptionsController extends Controller
         $data = $request->validate([
             'name' => 'required|max:64',
             'discount' => 'required|numeric|max:100|min:0',
-            'minimum_order' => 'required|numeric',
             'price' => 'required|numeric',
             'status' => 'required|in:applecible,not_applecible'
         ]);
@@ -83,7 +82,6 @@ class SubcriptionsController extends Controller
         $data = $request->validate([
             'name' => 'required|max:64',
             'discount' => 'required|numeric|max:100|min:0',
-            'minimum_order' => 'required|numeric',
             'price' => 'required|numeric',
             'status' => 'required|in:applecible,not_applecible'
         ]);

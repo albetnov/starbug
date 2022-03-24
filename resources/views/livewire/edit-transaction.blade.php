@@ -1,11 +1,11 @@
-@section('title', 'Create Transaction')
+@section('title', 'Edit Transaction')
 <div>
     <!-- Content -->
 
     <div class="container-fluid flex-grow-1 container-p-y">
         <div class="card shadow">
             <div class="card-header">
-                Create Transaction
+                Edit Transaction
                 <br>
                 @if ($errors->any())
                     <div class="alert alert-danger">
@@ -21,7 +21,7 @@
                 </button>
             </div>
             <div class="card-body">
-                <form class="mb-3" wire:submit.prevent='create' method="POST" id="create"
+                <form class="mb-3" wire:submit.prevent='update' method="POST" id="edit"
                     enctype="multipart/form-data">
                     @csrf
                     <div class="mb-3">
@@ -52,8 +52,8 @@
 
                     <div class="mb-3">
                         <label for="invoice" class="form-label">Invoice</label><br>
-                        <button class="btn btn-sm badge rounded-pill bg-primary" wire:click="generate"
-                            type="button">Auto
+                        <button class="btn btn-sm badge rounded-pill bg-primary" type="button"
+                            wire:click="generate">Auto
                             Generate</button>
                         <input type="text" name="invoice" wire:model="invoice" class="form-control mt-2">
                     </div>
@@ -116,8 +116,8 @@
                 </form>
             </div>
             <div class="card-footer">
-                <button class="btn btn-primary" type="submit" form="create">
-                    <i class="bx bx-paper-plane"></i> Create
+                <button class="btn btn-primary" type="submit" form="edit">
+                    <i class="bx bx-paper-plane"></i> Edit
                 </button>
             </div>
         </div>

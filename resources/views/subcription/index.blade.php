@@ -38,7 +38,6 @@
                             <tr>
                                 <th>Name</th>
                                 <th>Discount</th>
-                                <th>Minimum Order</th>
                                 <th>Price</th>
                                 <th>Status</th>
                                 <th>Created At</th>
@@ -51,7 +50,6 @@
                                 <tr>
                                     <td>{{ $subcription->name }}</td>
                                     <td>{{ $subcription->discount }}</td>
-                                    <td>{{ $subcription->minimum_order }}</td>
                                     <td>{{ $subcription->price }}</td>
                                     <td>
                                         @if ($subcription->status == 'applecible')

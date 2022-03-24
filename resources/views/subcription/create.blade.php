@@ -38,12 +38,6 @@
                     </div>
 
                     <div class="mb-3">
-                        <label for="minimum_order" class="form-label">Minimum Order</label>
-                        <input type="number" class="form-control" id="minimum_order" name="minimum_order"
-                            placeholder="Enter subcription minimum_order" autofocus value="{{ old('minimum_order') }}" />
-                    </div>
-
-                    <div class="mb-3">
                         <label for="price" class="form-label">price</label>
                         <input type="number" class="form-control" id="price" name="price"
                             placeholder="Enter subcription price" autofocus value="{{ old('price') }}" />

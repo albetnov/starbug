@@ -4,11 +4,13 @@ namespace App\Http\Livewire;
 
 use App\Models\Cafe;
 use App\Models\Transaction as ModelsTransaction;
+use App\Models\TransactionMenu;
+use Illuminate\Support\Facades\DB;
 use Livewire\Component;
 
 class Transaction extends Component
 {
-    public $filter = false, $status;
+    public $filter = false, $status, $details = false, $detailReady, $name;
     public function updated($fields)
     {
         if ($fields == 'status') {
@@ -18,6 +20,28 @@ class Transaction extends Component
 
             $this->filter = true;
         }
+    }
+
+    public function showDetail($id)
+    {
+        $this->details = TransactionMenu::with('transaction', 'menu')->where('id_transaction', $id)->get();
+        $this->name = ModelsTransaction::find($id)->customer->name;
+        $this->detailReady = true;
+        $this->emit('showDetail');
+    }
+
+    public function delete($id)
+    {
+        DB::transaction(function () use ($id) {
+            TransactionMenu::where('id_transaction', $id)->delete();
+            ModelsTransaction::find($id)->delete();
+        });
+
+        $notif = [
+            'toast' => 'success',
+            'message' => 'Transaction deleted'
+        ];
+        return to_route('owner.transaction')->with($notif);
     }
 
     public function render()

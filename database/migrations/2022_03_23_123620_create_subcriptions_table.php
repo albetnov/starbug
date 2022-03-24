@@ -17,7 +17,6 @@ return new class extends Migration
             $table->id();
             $table->string('name');
             $table->bigInteger('discount');
-            $table->bigInteger('minimum_order');
             $table->bigInteger('price');
             $table->enum('status', ['applecible', 'not_applecible']);
             $table->timestamps();

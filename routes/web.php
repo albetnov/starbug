@@ -9,6 +9,7 @@ use App\Http\Controllers\ProfileManager;
 use App\Http\Controllers\SubcriptionsController;
 use App\Http\Controllers\TableController;
 use App\Http\Livewire\AddTransaction;
+use App\Http\Livewire\EditTransaction;
 use App\Http\Livewire\Transaction;
 use Illuminate\Support\Facades\Route;
 
@@ -65,6 +66,7 @@ Route::middleware('auth')->group(function () {
         Route::resource('customers', CustomersController::class)->except('show')->names(['index' => 'customers', 'destroy' => 'customers.delete']);
         Route::get('transaction', Transaction::class)->name('transaction');
         Route::get('transaction/create', AddTransaction::class)->name('transaction.create');
+        Route::get('transaction/edit/{transaction}', EditTransaction::class)->name('transaction.edit');
     });
 
     Route::controller(ProfileManager::class)->group(function () {

@@ -11,16 +11,31 @@ use Illuminate\Support\Facades\DB;
 use Livewire\Component;
 use Illuminate\Support\Str;
 
-class AddTransaction extends Component
+class EditTransaction extends Component
 {
     public $notGuest = true, $subcription, $id_customer = null, $discount, $notSupported = false, $invoice, $payment_status;
-    public $qty, $total = 0;
+    public $qty, $total = 0, $transaction, $details;
 
     protected $rules = [
         'invoice' => 'required',
         'qty.*' => 'required',
         'payment_status' => 'required|in:paid,waiting,cancelled'
     ];
+
+    public function mount(Transaction $transaction)
+    {
+        $this->id_customer = $transaction->id_customer;
+        $this->invoice = $transaction->invoice;
+        $this->payment_status = $transaction->payment_status;
+        $this->discount = $transaction->discount;
+        $this->subcription = $transaction->subcription;
+        $this->total = $transaction->price;
+        $this->details = TransactionMenu::with('transaction', 'menu')->where('id_transaction', $transaction->id)->get();
+        foreach ($this->details as $detail) {
+            $this->qty[$detail->id_menu] = $detail->qty;
+        }
+        $this->transaction = $transaction;
+    }
 
     public function caculate()
     {
@@ -68,19 +83,19 @@ class AddTransaction extends Component
         $this->invoice = Str::random(20);
     }
 
-    public function create()
+    public function update()
     {
         $this->validate();
         DB::transaction(function () {
-            $data = Transaction::create([
+            $this->transaction->update([
                 'id_customer' => $this->id_customer,
                 'invoice' => $this->invoice,
                 'payment_status' => $this->payment_status,
                 'price' => $this->total
             ]);
             foreach ($this->qty as $qty => $value) {
-                TransactionMenu::create([
-                    'id_transaction' => $data->id,
+                TransactionMenu::where('id_transaction', $this->transaction->id)->where('id_menu', $qty)->update([
+                    'id_transaction' => $this->transaction->id,
                     'id_menu' => $qty,
                     'qty' => $value,
                 ]);
@@ -89,7 +104,7 @@ class AddTransaction extends Component
 
         $notif = [
             'toast' => 'success',
-            'message' => 'Transaction has been created.'
+            'message' => 'Transaction has been edited.'
         ];
 
         return to_route('owner.transaction')->with($notif);
@@ -99,6 +114,6 @@ class AddTransaction extends Component
     {
         $customers = Customers::with('subcription')->where('status', 'active')->get();
         $menus = Menu::with('category')->where('status', 'production')->get();
-        return view('livewire.add-transaction', compact('customers', 'menus'))->extends('layouts.main', ['appName' => Cafe::first()->name])->section('content');
+        return view('livewire.edit-transaction', compact('customers', 'menus'))->extends('layouts.main', ['appName' => Cafe::first()->name])->section('content');
     }
 }

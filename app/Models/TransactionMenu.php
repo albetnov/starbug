@@ -12,6 +12,11 @@ class TransactionMenu extends Model
 
     public function menu()
     {
-        return $this->belongsTo(Menu::class);
+        return $this->belongsTo(Menu::class, 'id_menu', 'id');
+    }
+
+    public function transaction()
+    {
+        return $this->belongsTo(Transaction::class, 'id_transaction', 'id');
     }
 }
