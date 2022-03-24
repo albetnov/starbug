@@ -14,15 +14,21 @@ use Illuminate\Support\Str;
 
 class AddTransaction extends Component
 {
+    /* This is a variable that is used to determine whether the customer is guest or not. */
     public $notGuest = true, $subcription, $id_customer = null, $discount, $notSupported = false, $invoice, $payment_status;
+    /* This is a variable that is used to determine the total price of the transaction. */
     public $qty, $total = 0;
 
+    /* This is a variable that is used to determine the rules of the validation. */
     protected $rules = [
         'invoice' => 'required',
         'qty.*' => 'required',
         'payment_status' => 'required|in:paid,waiting,cancelled'
     ];
 
+    /**
+     * This function is used to calculate the total price of the order
+     */
     public function caculate()
     {
         $total = 0;
@@ -38,6 +44,9 @@ class AddTransaction extends Component
         }
     }
 
+    /**
+     * If the customer has a subcription, then set the subcription and discount
+     */
     public function updatedIdCustomer()
     {
         if ($this->id_customer != null) {
@@ -57,6 +66,10 @@ class AddTransaction extends Component
         }
     }
 
+   /**
+    * If the user is logged in, then they are not a guest. If they are not logged in, then they are a
+    * guest
+    */
     public function guestMode()
     {
         if ($this->notGuest) {
@@ -66,11 +79,19 @@ class AddTransaction extends Component
         }
     }
 
+    /**
+     * Generate a random string of 20 characters
+     */
     public function generate()
     {
         $this->invoice = Str::random(20);
     }
 
+   /**
+    * This function is used to create a new transaction
+    * 
+    * @return The transaction has been created.
+    */
     public function create()
     {
         $this->validate();
@@ -102,6 +123,11 @@ class AddTransaction extends Component
         }
     }
 
+    /**
+     * This function is used to render the view for the add-transaction component
+     * 
+     * @return The view is being returned.
+     */
     public function render()
     {
         $customers = Customers::with('subcription')->where('status', 'active')->get();

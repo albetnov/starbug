@@ -13,11 +13,22 @@ use Illuminate\Support\Facades\Storage;
 class OwnerController extends Controller
 {
     use MainView;
+
+    /**
+     * This function will return the view of the dashboard
+     * 
+     * @return The view file.
+     */
     public function dashboard()
     {
         return $this->main_view('owner.dashboard');
     }
 
+    /**
+     * This function will return the view for the users page
+     * 
+     * @return The view file.
+     */
     public function users()
     {
         $users = User::latest()->get();
@@ -25,11 +36,23 @@ class OwnerController extends Controller
         return $this->main_view('owner.users.index', compact('users'));
     }
 
+    /**
+     * This function creates a view that displays the create user form
+     * 
+     * @return The view.
+     */
     public function createUser()
     {
         return $this->main_view('owner.users.create');
     }
 
+    /**
+     * Create a new user
+     * 
+     * @param Request request The request object.
+     * 
+     * @return The user is being returned to the users page.
+     */
     public function performCreateUser(Request $request)
     {
         $data = $request->validate([
@@ -58,11 +81,26 @@ class OwnerController extends Controller
         return to_route('owner.users')->with($notif);
     }
 
+    /**
+     * This function will return the view for editing a user
+     * 
+     * @param User user The user object that we want to edit.
+     * 
+     * @return The view 'owner.users.edit'
+     */
     public function editUser(User $user)
     {
         return $this->main_view('owner.users.edit', compact('user'));
     }
 
+    /**
+     * This function is used to edit a user
+     * 
+     * @param User user The user model to be updated.
+     * @param Request request The request object.
+     * 
+     * @return The user is being returned to the users page.
+     */
     public function performEditUser(User $user, Request $request)
     {
         $data = $request->validate([
@@ -99,6 +137,13 @@ class OwnerController extends Controller
         return to_route('owner.users')->with($notif);
     }
 
+    /**
+     * This function deletes a user from the database
+     * 
+     * @param User user The user model that we want to delete.
+     * 
+     * @return A redirect to the users page.
+     */
     public function performDelUser(User $user)
     {
         if ($user->propic && $user->propic != "default.png") {
@@ -115,6 +160,13 @@ class OwnerController extends Controller
         return to_route('owner.users')->with($notif);
     }
 
+    /**
+     * This function updates the role of a user to cashier
+     * 
+     * @param User user The user model that is being updated.
+     * 
+     * @return The route to the users page with a success message.
+     */
     public function upgradeUser(User $user)
     {
         $user->update(['role' => 'cashier']);
@@ -127,12 +179,24 @@ class OwnerController extends Controller
         return to_route('owner.users')->with($notif);
     }
 
+    /**
+     * This function is used to display the cafe page
+     * 
+     * @return The view 'owner.cafe' with the variable 'cafe' being passed in.
+     */
     public function cafe()
     {
         $cafe = Cafe::first();
         return $this->main_view('owner.cafe',  ['cafe' => $cafe]);
     }
 
+    /**
+     * The function is used to edit the cafe's name and address
+     * 
+     * @param Request request The request object.
+     * 
+     * @return The view of the cafe page.
+     */
     public function editCafe(Request $request)
     {
         $request->validate([
@@ -156,17 +220,34 @@ class OwnerController extends Controller
         return to_route('owner.cafe')->with($notif);
     }
 
+    /**
+     * This function will show all the categories in the database
+     * 
+     * @return The view is being returned.
+     */
     public function showCategory()
     {
         $categories = Category::latest()->get();
         return $this->main_view('owner.categories.index', compact('categories'));
     }
 
+    /**
+     * This function creates a new category
+     * 
+     * @return A view.
+     */
     public function createCategory()
     {
         return $this->main_view('owner.categories.create');
     }
 
+    /**
+     * Create a new category
+     * 
+     * @param Request request The request object.
+     * 
+     * @return The view of the category page.
+     */
     public function performCreateCategory(Request $request)
     {
         $data = $request->validate([
@@ -184,11 +265,28 @@ class OwnerController extends Controller
         return to_route('owner.category')->with($notif);
     }
 
+    /**
+     * This function will return the view for editing a category
+     * 
+     * @param Category category The category that we want to edit.
+     * 
+     * @return The view.
+     */
     public function editCategory(Category $category)
     {
         return $this->main_view('owner.categories.edit', compact('category'));
     }
 
+    /**
+     * The function takes in a category and a request object. It validates the request object and
+     * updates the category with the validated data. It then returns a route to the category page with
+     * a success message
+     * 
+     * @param Category category The category model instance.
+     * @param Request request The request object.
+     * 
+     * @return A view.
+     */
     public function performEditCategory(Category $category, Request $request)
     {
         $data = $request->validate([
@@ -206,6 +304,13 @@ class OwnerController extends Controller
         return to_route('owner.category')->with($notif);
     }
 
+    /**
+     * This function deletes a category
+     * 
+     * @param Category category The category to delete.
+     * 
+     * @return A response object.
+     */
     public function performDelCategory(Category $category)
     {
         $category->delete();

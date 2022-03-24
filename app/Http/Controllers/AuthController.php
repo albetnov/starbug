@@ -9,6 +9,13 @@ use Illuminate\Support\Facades\RateLimiter;
 
 class AuthController extends Controller
 {
+   /**
+    * This function is used to login the user
+    * 
+    * @param Request request The request object.
+    * 
+    * @return The login() method returns a redirect response object.
+    */
     public function login(Request $request)
     {
         $data = $request->validate([
@@ -43,6 +50,17 @@ class AuthController extends Controller
         }
     }
 
+   /**
+    * This function is used to register a new user. 
+    * The function will validate the user input and then create a new user. 
+    * The function will also log the user in after registration. 
+    * The function will also check if the user has exceeded the rate limit. 
+    * The function will also check if the user has exceeded the number of attempts. 
+    * 
+    * @param Request request The request object.
+    * 
+    * @return The user is being redirected to the disabled route.
+    */
     public function register(Request $request)
     {
         $data = $request->validate([
@@ -76,6 +94,13 @@ class AuthController extends Controller
         return to_route('disabled');
     }
 
+    /**
+     * Logs the user out and redirects them to the homepage
+     * 
+     * @param Request request The current request instance.
+     * 
+     * @return The user is being redirected to the home page.
+     */
     public function logout(Request $request)
     {
         Auth::logout();

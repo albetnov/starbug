@@ -13,11 +13,24 @@ use Illuminate\Support\Facades\Storage;
 class ProfileManager extends Controller
 {
     use MainView;
+    
+    /**
+     * This function displays the profile page
+     * 
+     * @return The view is being returned.
+     */
     public function show()
     {
         return $this->main_view('profile');
     }
 
+   /**
+    * Update the user's account
+    * 
+    * @param Request request The request object.
+    * 
+    * @return Nothing.
+    */
     public function edit(Request $request)
     {
         $request->validate([
@@ -63,6 +76,13 @@ class ProfileManager extends Controller
         return to_route('profile')->with($notif);
     }
 
+    /**
+     * If the user has ticked the box, delete the user's account
+     * 
+     * @param Request request The request object.
+     * 
+     * @return Nothing.
+     */
     public function delete(Request $request)
     {
         if (!$request->accountDeletion) {

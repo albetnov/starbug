@@ -11,7 +11,15 @@ use Livewire\Component;
 
 class Transaction extends Component
 {
+    /* This is a variable that is used to determine whether the user has clicked the filter button or
+   not. */
     public $filter = false, $status, $details = false, $detailReady, $name;
+
+    /**
+     * This function is called when the user updates the status of a payment
+     * 
+     * @param fields The fields that you want to update.
+     */
     public function updated($fields)
     {
         if ($fields == 'status') {
@@ -23,6 +31,11 @@ class Transaction extends Component
         }
     }
 
+    /**
+     * This function will get the details of a transaction and the name of the customer
+     * 
+     * @param id The id of the transaction to show the details of.
+     */
     public function showDetail($id)
     {
         $this->details = TransactionMenu::with('transaction', 'menu')->where('id_transaction', $id)->get();
@@ -31,6 +44,13 @@ class Transaction extends Component
         $this->emit('showDetail');
     }
 
+    /**
+     * This function is used to delete a transaction
+     * 
+     * @param id The ID of the model to delete.
+     * 
+     * @return The return is a redirect to the route that was specified in the route() method.
+     */
     public function delete($id)
     {
         DB::transaction(function () use ($id) {
@@ -50,6 +70,11 @@ class Transaction extends Component
         }
     }
 
+    /**
+     * This function is used to render the transactions page
+     * 
+     * @return The view is being returned.
+     */
     public function render()
     {
         $transactions = ModelsTransaction::with('transactionMenu')->get();
