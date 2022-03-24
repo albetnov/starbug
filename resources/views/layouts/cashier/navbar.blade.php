@@ -62,8 +62,8 @@
              <ul class="menu-inner py-1">
                  <!-- Dashboard -->
                  <li
-                     class="menu-item {{ strpos(Route::currentRouteName(), 'owner.dashboard') === 0 ? 'active' : '' }}">
-                     <a href="{{ route('owner.dashboard') }}" class="menu-link">
+                     class="menu-item {{ strpos(Route::currentRouteName(), 'cashier.dashboard') === 0 ? 'active' : '' }}">
+                     <a href="{{ route('cashier.dashboard') }}" class="menu-link">
                          <i class="menu-icon tf-icons bx bx-home-circle"></i>
                          <div data-i18n="Analytics">Dashboard</div>
                      </a>
@@ -80,56 +80,21 @@
                      </a>
                  </li>
 
-                 <li class="menu-item {{ strpos(Route::currentRouteName(), 'owner.users') === 0 ? 'active' : '' }}">
-                     <a href="{{ route('owner.users') }}" class="menu-link">
-                         <i class="menu-icon tf-icons bx bx-user"></i>
-                         <div data-i18n="Manage Users">Manage Users</div>
-                     </a>
-                 </li>
-
-                 <li class="menu-item {{ strpos(Route::currentRouteName(), 'owner.cafe') === 0 ? 'active' : '' }}">
-                     <a href="{{ route('owner.cafe') }}" class="menu-link">
-                         <i class="menu-icon tf-icons bx bx-coffee"></i>
-                         <div data-i18n="Manage Cafe">Manage Cafe</div>
-                     </a>
-                 </li>
-
                  <li class="menu-header small text-uppercase"><span class="menu-header-text">Menu</span></li>
                  <!-- Cards -->
-                 <li
-                     class="menu-item {{ strpos(Route::currentRouteName(), 'owner.category') === 0 ? 'active' : '' }}">
-                     <a href="{{ route('owner.category') }}" class="menu-link">
-                         <i class="menu-icon tf-icons bx bx-collection"></i>
-                         <div data-i18n="Manage Category">Manage Category</div>
-                     </a>
-                 </li>
 
-                 <li class="menu-item {{ strpos(Route::currentRouteName(), 'owner.menu') === 0 ? 'active' : '' }}">
-                     <a href="{{ route('owner.menu') }}" class="menu-link">
+                 <li class="menu-item {{ strpos(Route::currentRouteName(), 'cashier.menu') === 0 ? 'active' : '' }}">
+                     <a href="{{ route('cashier.menu') }}" class="menu-link">
                          <i class="menu-icon tf-icons bx bx-food-menu"></i>
                          <div data-i18n="Manage Menu">Manage Menu</div>
                      </a>
                  </li>
 
                  <li class="menu-header small text-uppercase"><span class="menu-header-text">Cafes</span></li>
-                 <li class="menu-item {{ strpos(Route::currentRouteName(), 'owner.tables') === 0 ? 'active' : '' }}">
-                     <a href="{{ route('owner.tables') }}" class="menu-link">
-                         <i class="menu-icon tf-icons bx bx-table"></i>
-                         <div data-i18n="Manage Tables">Manage Tables</div>
-                     </a>
-                 </li>
 
                  <li
-                     class="menu-item {{ strpos(Route::currentRouteName(), 'owner.subcription') === 0 ? 'active' : '' }}">
-                     <a href="{{ route('owner.subcription') }}" class="menu-link">
-                         <i class="menu-icon tf-icons bx bx-purchase-tag"></i>
-                         <div data-i18n="Manage Subcriptions">Manage Subcriptions</div>
-                     </a>
-                 </li>
-
-                 <li
-                     class="menu-item {{ strpos(Route::currentRouteName(), 'owner.customers') === 0 ? 'active' : '' }}">
-                     <a href="{{ route('owner.customers') }}" class="menu-link">
+                     class="menu-item {{ strpos(Route::currentRouteName(), 'cashier.customers') === 0 ? 'active' : '' }}">
+                     <a href="{{ route('cashier.customers') }}" class="menu-link">
                          <i class="menu-icon tf-icons bx bxs-user-rectangle"></i>
                          <div data-i18n="Manage Customers">Manage Customers</div>
                      </a>
@@ -137,22 +102,16 @@
 
 
                  <li
-                     class="menu-item {{ strpos(Route::currentRouteName(), 'owner.transaction') === 0 ? 'active' : '' }}">
-                     <a href="{{ route('owner.transaction') }}" class="menu-link">
+                     class="menu-item {{ strpos(Route::currentRouteName(), 'cashier.transaction') === 0 ? 'active' : '' }}">
+                     <a href="{{ route('cashier.transaction') }}" class="menu-link">
                          <i class="menu-icon tf-icons bx bxs-wallet"></i>
                          <div data-i18n="Manage Transactions">Manage Transactions</div>
                      </a>
                  </li>
 
                  <!-- Misc -->
-
                  <li class="menu-header small text-uppercase"><span class="menu-header-text">Misc</span></li>
-                 <li class="menu-item">
-                     <a href="{{ url('/telescope') }}" class="menu-link">
-                         <i class="menu-icon tf-icons bx bxs-hdd"></i>
-                         <div data-i18n="Manage Transactions">Logging</div>
-                     </a>
-                 </li>
+
                  <li class="menu-item">
                      <a href="https://twitter.com/AlbetNv" target="_blank" class="menu-link">
                          <i class="menu-icon tf-icons bx bx-support"></i>

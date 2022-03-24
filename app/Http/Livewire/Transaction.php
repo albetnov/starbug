@@ -5,6 +5,7 @@ namespace App\Http\Livewire;
 use App\Models\Cafe;
 use App\Models\Transaction as ModelsTransaction;
 use App\Models\TransactionMenu;
+use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
 use Livewire\Component;
 
@@ -41,7 +42,12 @@ class Transaction extends Component
             'toast' => 'success',
             'message' => 'Transaction deleted'
         ];
-        return to_route('owner.transaction')->with($notif);
+
+        if (Auth::user()->role == 'owner') {
+            return to_route('owner.transaction')->with($notif);
+        } else {
+            return to_route('cashier.transaction')->with($notif);
+        }
     }
 
     public function render()

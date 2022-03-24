@@ -1,5 +1,5 @@
 @extends('layouts.main')
-@section('title', 'Owner Dashboard')
+@section('title', 'Cashier Dashboard')
 @section('content')
     <!-- Content -->
 

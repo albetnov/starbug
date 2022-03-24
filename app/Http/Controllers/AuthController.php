@@ -24,6 +24,8 @@ class AuthController extends Controller
                 return redirect()->intended(route('owner.dashboard'))->with(['message' => 'Welcome to Panel!']);
             } else if ($getRole == 'disabled') {
                 return redirect()->intended(route('disabled'));
+            } else if ($getRole == 'cashier') {
+                return redirect()->intended(route('cashier.dashboard'))->with(['message' => 'Welcome to Panel!']);
             }
         }
 

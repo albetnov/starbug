@@ -7,9 +7,17 @@
             <div class="card-header">
                 Transactions List
                 <br>
-                <button class="mt-1 btn btn-primary" onclick="location.href='{{ route('owner.transaction.create') }}'">
-                    <i class="bx bx-plus"></i> Create Transactions
-                </button>
+                @if (Auth::user()->role == 'owner')
+                    <button class="mt-1 btn btn-primary"
+                        onclick="location.href='{{ route('owner.transaction.create') }}'">
+                        <i class="bx bx-plus"></i> Create Transactions
+                    </button>
+                @else
+                    <button class="mt-1 btn btn-primary"
+                        onclick="location.href='{{ route('cashier.transaction.create') }}'">
+                        <i class="bx bx-plus"></i> Create Transactions
+                    </button>
+                @endif
                 <button class="mt-1 btn btn-primary" type="button" data-bs-toggle="collapse" data-bs-target="#filter"
                     aria-expanded="false" aria-controls="filter">
                     Filter
@@ -49,7 +57,7 @@
                         <tbody>
                             @foreach ($transactions as $transaction)
                                 <tr>
-                                    <td>{{ $transaction->customer->name }}</td>
+                                    <td>{{ $transaction->customer?->name ?? 'Guest' }}</td>
                                     <td>{{ $transaction->invoice }}</td>
                                     <td>
                                         @if ($transaction->payment_status == 'paid')
@@ -63,7 +71,7 @@
                                                 class="badge bg-label-danger me-1">{{ $transaction->payment_status }}</span>
                                         @endif
                                     </td>
-                                    <td>{{ $transaction->customer->subcription->name }}</td>
+                                    <td>{{ $transaction->customer?->subcription->name ?? 'Guest' }}</td>
                                     <td>Rp. {{ number_format($transaction->price) }}</td>
                                     <td>{{ $transaction->created_at }}</td>
                                     <td>{{ $transaction->updated_at }}</td>
@@ -72,10 +80,17 @@
                                             wire:click='showDetail({{ $transaction->id }})'>
                                             <i class="bx bx-detail"></i>
                                         </button>
-                                        <button class="btn btn-info"
-                                            onclick="location.href='{{ route('owner.transaction.edit', $transaction->id) }}'"><i
-                                                class="bx bx-edit"></i>
-                                        </button>
+                                        @if (Auth::user()->role == 'owner')
+                                            <button class="btn btn-info"
+                                                onclick="location.href='{{ route('owner.transaction.edit', $transaction->id) }}'"><i
+                                                    class="bx bx-edit"></i>
+                                            </button>
+                                        @else
+                                            <button class="btn btn-info"
+                                                onclick="location.href='{{ route('cashier.transaction.edit', $transaction->id) }}'"><i
+                                                    class="bx bx-edit"></i>
+                                            </button>
+                                        @endif
                                         <button type="button" wire:click='delete({{ $transaction->id }})'
                                             class="btn btn-danger"><i class="bx bx-trash"></i></button>
                                     </td>

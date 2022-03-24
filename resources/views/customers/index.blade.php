@@ -8,9 +8,15 @@
             <div class="card-header">
                 Customers List
                 <br>
-                <button class="mt-1 btn btn-primary" onclick="location.href='{{ route('owner.customers.create') }}'">
-                    <i class="bx bx-plus"></i> Create Customers
-                </button>
+                @if (Auth::user()->role == 'owner')
+                    <button class="mt-1 btn btn-primary" onclick="location.href='{{ route('owner.customers.create') }}'">
+                        <i class="bx bx-plus"></i> Create Customers
+                    </button>
+                @else
+                    <button class="mt-1 btn btn-primary" onclick="location.href='{{ route('cashier.customers.create') }}'">
+                        <i class="bx bx-plus"></i> Create Customers
+                    </button>
+                @endif
                 <button class="mt-1 btn btn-primary" type="button" data-bs-toggle="collapse" data-bs-target="#filter"
                     aria-expanded="false" aria-controls="filter">
                     Filter
@@ -67,17 +73,31 @@
                                     <td>{{ $customer->created_at }}</td>
                                     <td>{{ $customer->updated_at }}</td>
                                     <td class="text-center">
-                                        <button class="btn btn-info"
-                                            onclick="location.href='{{ route('owner.customers.edit', $customer->id) }}'"><i
-                                                class="bx bx-edit"></i>
-                                        </button>
-                                        <form action="{{ route('owner.customers.delete', $customer->id) }}" method="post"
-                                            style="display: inline">
-                                            @csrf
-                                            @method('DELETE')
-                                            <button type="submit" class="btn btn-danger"><i
-                                                    class="bx bx-trash"></i></button>
-                                        </form>
+                                        @if (Auth::user()->role == 'owner')
+                                            <button class="btn btn-info"
+                                                onclick="location.href='{{ route('owner.customers.edit', $customer->id) }}'"><i
+                                                    class="bx bx-edit"></i>
+                                            </button>
+                                            <form action="{{ route('owner.customers.delete', $customer->id) }}"
+                                                method="post" style="display: inline">
+                                                @csrf
+                                                @method('DELETE')
+                                                <button type="submit" class="btn btn-danger"><i
+                                                        class="bx bx-trash"></i></button>
+                                            </form>
+                                        @else
+                                            <button class="btn btn-info"
+                                                onclick="location.href='{{ route('cashier.customers.edit', $customer->id) }}'"><i
+                                                    class="bx bx-edit"></i>
+                                            </button>
+                                            <form action="{{ route('cashier.customers.delete', $customer->id) }}"
+                                                method="post" style="display: inline">
+                                                @csrf
+                                                @method('DELETE')
+                                                <button type="submit" class="btn btn-danger"><i
+                                                        class="bx bx-trash"></i></button>
+                                            </form>
+                                        @endif
                                     </td>
                                 </tr>
                             @endforeach

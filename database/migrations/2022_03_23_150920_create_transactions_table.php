@@ -15,7 +15,7 @@ return new class extends Migration
     {
         Schema::create('transactions', function (Blueprint $table) {
             $table->id();
-            $table->foreignId('id_customer')->constrained('customers', 'id')->cascadeOnUpdate()->cascadeOnUpdate();
+            $table->foreignId('id_customer')->nullable()->constrained('customers', 'id')->cascadeOnUpdate()->cascadeOnUpdate();
             $table->string('invoice');
             $table->enum('payment_status', ['paid', 'waiting', 'cancelled']);
             $table->bigInteger('price');

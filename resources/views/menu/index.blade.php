@@ -8,9 +8,15 @@
             <div class="card-header">
                 Menu Lists
                 <br>
-                <button class="mt-1 btn btn-primary" onclick="location.href='{{ route('owner.menu.create') }}'">
-                    <i class="bx bx-plus"></i> Create Menu
-                </button>
+                @if (Auth::user()->role == 'owner')
+                    <button class="mt-1 btn btn-primary" onclick="location.href='{{ route('owner.menu.create') }}'">
+                        <i class="bx bx-plus"></i> Create Menu
+                    </button>
+                @else
+                    <button class="mt-1 btn btn-primary" onclick="location.href='{{ route('cashier.menu.create') }}'">
+                        <i class="bx bx-plus"></i> Create Menu
+                    </button>
+                @endif
                 <button class="mt-1 btn btn-primary" type="button" data-bs-toggle="collapse" data-bs-target="#filter"
                     aria-expanded="false" aria-controls="filter">
                     Filter
@@ -84,17 +90,31 @@
                                                 </div>
                                             </div>
                                         </div>
-                                        <button class="btn btn-info"
-                                            onclick="location.href='{{ route('owner.menu.edit', $menu->id) }}'"><i
-                                                class="bx bx-edit"></i>
-                                        </button>
-                                        <form action="{{ route('owner.menu.delete', $menu->id) }}" method="post"
-                                            style="display: inline">
-                                            @csrf
-                                            @method('DELETE')
-                                            <button type="submit" class="btn btn-danger"><i
-                                                    class="bx bx-trash"></i></button>
-                                        </form>
+                                        @if (Auth::user()->role == 'owner')
+                                            <button class="btn btn-info"
+                                                onclick="location.href='{{ route('owner.menu.edit', $menu->id) }}'"><i
+                                                    class="bx bx-edit"></i>
+                                            </button>
+                                            <form action="{{ route('owner.menu.delete', $menu->id) }}" method="post"
+                                                style="display: inline">
+                                                @csrf
+                                                @method('DELETE')
+                                                <button type="submit" class="btn btn-danger"><i
+                                                        class="bx bx-trash"></i></button>
+                                            </form>
+                                        @else
+                                            <button class="btn btn-info"
+                                                onclick="location.href='{{ route('cashier.menu.edit', $menu->id) }}'"><i
+                                                    class="bx bx-edit"></i>
+                                            </button>
+                                            <form action="{{ route('cashier.menu.delete', $menu->id) }}" method="post"
+                                                style="display: inline">
+                                                @csrf
+                                                @method('DELETE')
+                                                <button type="submit" class="btn btn-danger"><i
+                                                        class="bx bx-trash"></i></button>
+                                            </form>
+                                        @endif
                                     </td>
                                 </tr>
                             @endforeach

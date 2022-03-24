@@ -6,6 +6,7 @@ use App\Http\Controllers\Modules\MainView;
 use App\Models\Customers;
 use App\Models\Subcriptions;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
 
 class CustomersController extends Controller
 {
@@ -58,7 +59,11 @@ class CustomersController extends Controller
             'message' => 'Customer created successfully'
         ];
 
-        return to_route('owner.customers')->with($notif);
+        if (Auth::user()->role == 'owner') {
+            return to_route('owner.customers')->with($notif);
+        } else {
+            return to_route('cashier.customers')->with($notif);
+        }
     }
 
     /**
@@ -95,7 +100,11 @@ class CustomersController extends Controller
             'message' => 'Customer updated successfully'
         ];
 
-        return to_route('owner.customers')->with($notif);
+        if (Auth::user()->role == 'owner') {
+            return to_route('owner.customers')->with($notif);
+        } else {
+            return to_route('cashier.customers')->with($notif);
+        }
     }
 
     /**
@@ -113,6 +122,10 @@ class CustomersController extends Controller
             'message' => 'customer deleted successfully'
         ];
 
-        return to_route('owner.customers')->with($notif);
+        if (Auth::user()->role == 'owner') {
+            return to_route('owner.customers')->with($notif);
+        } else {
+            return to_route('cashier.customers')->with($notif);
+        }
     }
 }

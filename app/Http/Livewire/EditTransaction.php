@@ -7,6 +7,7 @@ use App\Models\Customers;
 use App\Models\Menu;
 use App\Models\Transaction;
 use App\Models\TransactionMenu;
+use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
 use Livewire\Component;
 use Illuminate\Support\Str;
@@ -24,7 +25,10 @@ class EditTransaction extends Component
 
     public function mount(Transaction $transaction)
     {
-        $this->id_customer = $transaction->id_customer;
+        $this->id_customer = $transaction->id_customer ?? null;
+        if ($this->id_customer == null) {
+            $this->notGuest = false;
+        }
         $this->invoice = $transaction->invoice;
         $this->payment_status = $transaction->payment_status;
         $this->discount = $transaction->discount;
@@ -42,10 +46,12 @@ class EditTransaction extends Component
         $total = 0;
         foreach ($this->qty as $qty => $value) {
             $total += $value * Menu::find($qty)->price;
-            $subcription = Customers::with('subcription')->find($this->id_customer)->subcription;
             $this->total = $total;
-            if ($subcription->status == 'applecible') {
-                $this->total -= $total * $subcription->discount / 100;
+            if ($this->id_customer != null) {
+                $subcription = Customers::with('subcription')->find($this->id_customer)->subcription;
+                if ($subcription->status == 'applecible') {
+                    $this->total -= $total * $subcription->discount / 100;
+                }
             }
         }
     }
@@ -107,7 +113,11 @@ class EditTransaction extends Component
             'message' => 'Transaction has been edited.'
         ];
 
-        return to_route('owner.transaction')->with($notif);
+        if (Auth::user()->role == 'owner') {
+            return to_route('owner.transaction')->with($notif);
+        } else {
+            return to_route('cashier.transaction')->with($notif);
+        }
     }
 
     public function render()

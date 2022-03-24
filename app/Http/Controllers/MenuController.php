@@ -6,6 +6,7 @@ use App\Http\Controllers\Modules\MainView;
 use App\Models\Category;
 use App\Models\Menu;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Storage;
 
 class MenuController extends Controller
@@ -64,8 +65,11 @@ class MenuController extends Controller
             'toast' => 'success',
             'message' => 'Menu created'
         ];
-
-        return to_route('owner.menu')->with($notif);
+        if (Auth::user()->role == 'owner') {
+            return to_route('owner.menu')->with($notif);
+        } else {
+            return to_route('cashier.menu')->with($notif);
+        }
     }
 
     /**
@@ -116,7 +120,11 @@ class MenuController extends Controller
             'message' => 'Menu updated'
         ];
 
-        return to_route('owner.menu')->with($notif);
+        if (Auth::user()->role == 'owner') {
+            return to_route('owner.menu')->with($notif);
+        } else {
+            return to_route('cashier.menu')->with($notif);
+        }
     }
 
     /**
@@ -138,6 +146,10 @@ class MenuController extends Controller
             'message' => 'Menu deleted'
         ];
 
-        return to_route('owner.menu')->with($notif);
+        if (Auth::user()->role == 'owner') {
+            return to_route('owner.menu')->with($notif);
+        } else {
+            return to_route('cashier.menu')->with($notif);
+        }
     }
 }

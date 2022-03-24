@@ -7,6 +7,7 @@ use App\Models\Customers;
 use App\Models\Menu;
 use App\Models\Transaction;
 use App\Models\TransactionMenu;
+use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
 use Livewire\Component;
 use Illuminate\Support\Str;
@@ -27,17 +28,19 @@ class AddTransaction extends Component
         $total = 0;
         foreach ($this->qty as $qty => $value) {
             $total += $value * Menu::find($qty)->price;
-            $subcription = Customers::with('subcription')->find($this->id_customer)->subcription;
             $this->total = $total;
-            if ($subcription->status == 'applecible') {
-                $this->total -= $total * $subcription->discount / 100;
+            if ($this->id_customer != null) {
+                $subcription = Customers::with('subcription')->find($this->id_customer)->subcription;
+                if ($subcription->status == 'applecible') {
+                    $this->total -= $total * $subcription->discount / 100;
+                }
             }
         }
     }
 
     public function updatedIdCustomer()
     {
-        if ($this->id_customer != "") {
+        if ($this->id_customer != null) {
             $subcription = Customers::with('subcription')->find($this->id_customer)->subcription;
             $this->subcription = $subcription->name;
             $this->discount = $subcription->discount;
@@ -92,7 +95,11 @@ class AddTransaction extends Component
             'message' => 'Transaction has been created.'
         ];
 
-        return to_route('owner.transaction')->with($notif);
+        if (Auth::user()->role == 'owner') {
+            return to_route('owner.transaction')->with($notif);
+        } else {
+            return to_route('cashier.transaction')->with($notif);
+        }
     }
 
     public function render()

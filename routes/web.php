@@ -1,6 +1,7 @@
 <?php
 
 use App\Http\Controllers\AuthController;
+use App\Http\Controllers\CashierController;
 use App\Http\Controllers\CustomersController;
 use App\Http\Controllers\GuestController;
 use App\Http\Controllers\MenuController;
@@ -63,6 +64,15 @@ Route::middleware('auth')->group(function () {
         Route::resource('menu', MenuController::class)->except('show')->names(['index' => 'menu', 'destroy' => 'menu.delete']);
         Route::resource('tables', TableController::class)->except('show')->names(['index' => 'tables', 'destroy' => 'tables.delete']);
         Route::resource('subcription', SubcriptionsController::class)->except('show')->names(['index' => 'subcription', 'destroy' => 'subcription.delete']);
+        Route::resource('customers', CustomersController::class)->except('show')->names(['index' => 'customers', 'destroy' => 'customers.delete']);
+        Route::get('transaction', Transaction::class)->name('transaction');
+        Route::get('transaction/create', AddTransaction::class)->name('transaction.create');
+        Route::get('transaction/edit/{transaction}', EditTransaction::class)->name('transaction.edit');
+    });
+
+    Route::group(['as' => 'cashier.', 'prefix' => 'cashier', 'middleware' => 'role:cashier', 'controller' => CashierController::class], function () {
+        Route::get('dashboard', 'dashboard')->name('dashboard');
+        Route::resource('menu', MenuController::class)->except('show')->names(['index' => 'menu', 'destroy' => 'menu.delete']);
         Route::resource('customers', CustomersController::class)->except('show')->names(['index' => 'customers', 'destroy' => 'customers.delete']);
         Route::get('transaction', Transaction::class)->name('transaction');
         Route::get('transaction/create', AddTransaction::class)->name('transaction.create');

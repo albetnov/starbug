@@ -1,6 +1,10 @@
 @include('layouts.header')
 @if (Auth::user()->role != 'disabled')
-    @include('layouts.navbar')
+    @if (Auth::user()->role == 'owner')
+        @include('layouts.navbar')
+    @else
+        @include('layouts.cashier.navbar')
+    @endif
     @include('layouts.topbar')
 @endif
 @yield('content')
