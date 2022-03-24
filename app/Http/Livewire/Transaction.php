@@ -39,7 +39,7 @@ class Transaction extends Component
     public function showDetail($id)
     {
         $this->details = TransactionMenu::with('transaction', 'menu')->where('id_transaction', $id)->get();
-        $this->name = ModelsTransaction::find($id)->customer->name;
+        $this->name = ModelsTransaction::find($id)->customer->name ?? 'Guest';
         $this->detailReady = true;
         $this->emit('showDetail');
     }
